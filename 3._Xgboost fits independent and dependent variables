@@ -1,0 +1,33 @@
+## Data preprocessing
+# Read data
+df <- read.csv(' file name ', row.names = 4)
+# Data below the detection limit is excluded
+df <- df[which(rowSums(df) >= [detection limit]), ]
+# Combined data information
+samples <- read.csv(' file name ', row.names = 1)
+df <- data.frame(t(df))
+df <- df[rownames(samples), ]
+df <- cbind(df, samples)
+#Decomposing the training set and the prediction set (7:3)
+set.seed(123)
+train <- sample(nrow(df), nrow(df)*0.7)
+df_train <- df[train, ]
+df_test <- df[-train, ]
+## Run Xgboost
+# Loading Xgboost package
+library(Xgboost)
+xgb <- xgboost(data = dtrain,max_depth=4, eta=0.5, objective='binary:logistic', nround=25)
+# The prediction accuracy by using the training set.
+df_predict <- predict(df_train.forest, df_train)
+plot(df_train$sample, concentration_predict, main = 'Training set',
+xlab = 'concentration (by months)', ylab = 'Predict')
+abline(1, 1)
+# Evaluate predictive performance using test sets
+df_predict <- predict(df_train.forest, df_test)
+plot(otu_test$ sample, plant_predict, main = 'Testing set',
+xlab = 'concentration (by months)', ylab = 'Predict')
+abline(1, 1)
+##Feature importance
+# Importance score
+importance_df <- data.frame(importance(df_train.forest), check.names = FALSE)
+head(importance_df)

@@ -1,0 +1,11 @@
+# Read data
+df <- read.csv(' file name ')
+# Loading Meta package
+library(meta)
+# Define variables and conduct tests for heterogeneity and bias
+metabin(experimental group, variable 1, control group, variable 2,data=df,sm="OR")
+metaresult<-metabin(region, experimental group, variable 1, control group, variable 2, data=df,sm="OR",
+studlab=paste(site, area),comb.random=FALSE)
+# Derived forest plot (heterogeneity test) and funnel plot (bias test)
+forest(metaresult)
+funnel(metaresult)
